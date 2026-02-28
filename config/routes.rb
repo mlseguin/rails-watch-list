@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'bookmarks/destroy'
   get 'lists/index'
   get 'lists/show'
   get 'lists/new'
@@ -15,4 +16,5 @@ Rails.application.routes.draw do
 
   # For destroy, we only need the bookmark id, not the list id
   # resources :bookmarks, :only :destroy
+  delete "bookmarks", to: "bookmarks#destroy"
 end
