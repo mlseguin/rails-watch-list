@@ -1,0 +1,9 @@
+<h1>Movie lists</h1>
+
+<ul class="list-group">
+  <% @lists.each do |list| %>
+    <li class="list-group-item"><%=  list.name %></li>
+  <% end %>
+</ul>
+
+<p class="mt-2"><%= link_to "New list", new_list_path %></p>

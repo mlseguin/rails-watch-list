@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  get 'lists/index'
+  get 'lists/show'
+  get 'lists/new'
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Setting the homepage to land on list
+  root "lists#index"
+
+  # Defining the routes for lists, bookmarks and movie
+  resources :lists do
+    # Bookmarks does not exists on their own
+    resources :bookmarks, only: [:new, :create]
+  end
+
+  # For destroy, we only need the bookmark id, not the list id
+  # resources :bookmarks, :only :destroy
 end
