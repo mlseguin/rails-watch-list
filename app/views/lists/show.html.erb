@@ -1,14 +1,34 @@
-<h1><%= @list.name %></h1>
+<div class="container mt-3">
+  <div class="d-flex justify-content-between">
+    <h3><%= @list.name %></h3>
 
-<%= link_to "Add a bookmark", new_list_bookmark_path(@list) %>
+    <p class="mt-2">
+      <%= link_to "⟻ Return to watch lists", lists_path, class:"btn btn-ligth"%>
+    </p>
+  </div>
 
-<ul>
-  <li>
-    <% @list.bookmarks.each do |bookmark| %>
-      <%= bookmark.movie.title %>
-      <%= bookmark.comment %>
-      <%= button_to "Remove", bookmarks_destroy_path(bookmark), method: :delete, class: "btn btn-warning" %>
-    <% end %>
-  </li>
-</ul>
-<p class="mt-2"><%= link_to "Return to lists", lists_path, class:"btn btn-info" %></p>
+  <div>
+    <%= link_to '<i class="fa-solid fa-circle-plus"></i> New bookmark'.html_safe,
+    new_list_bookmark_path(@list), class:"btn btn-ligth" %>
+
+    <ul class= "list-group mt-2">
+      <% @list.bookmarks.each do |bookmark| %>
+        <li class="list-group-item border-secondary-subtle d-flex justify-content-between">
+          <div class="col-2 p-1">
+            <%= image_tag bookmark.movie.poster_url , alt: bookmark.movie.title, class: "img-fluid"%>
+          </div>
+          <div class="col-8 p-1">
+            <p class="fw-bold p-0 m-0"><%= bookmark.movie.title %></p>
+            <p class="p-0 m-0"><%= bookmark.comment %></p>
+          </div>
+          <div class="col-2 p-1">
+            <%= button_to "<i class='fa-solid fa-eraser'></i>".html_safe,
+            bookmarks_destroy_path(bookmark),
+            method: :delete, class: "btn btn-ligth" %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+
+  </div>
+</div>

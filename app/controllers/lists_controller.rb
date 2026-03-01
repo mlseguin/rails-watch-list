@@ -33,7 +33,7 @@ class ListsController < ApplicationController
   private
 
   def set_list
-    @list = List.find(params[:list_id])
+    @list = List.find(params[:id])
   end
 
   # Secure list creation against malicious params
