@@ -1,11 +1,11 @@
 class ListsController < ApplicationController
+  before_action :set_list, only: [:show, :destroy]
 
   def index
     @lists = List.all
   end
 
   def show
-    @list = List.find(params[:id])
   end
 
   def new
@@ -13,16 +13,28 @@ class ListsController < ApplicationController
   end
 
   def create
-    list = List.new(list_params)
+    @list = List.new(list_params)
 
-    if list.save
-      redirect_to list_path(list)
+    if @list.save
+      redirect_to list_path(@list)
     else
       render :new, status: :unprocessable_entity
     end
   end
 
+  def destroy
+    if @list.destroy
+      redirect_to @list, status: :see_other
+    else
+      raise
+    end
+  end
+
   private
+
+  def set_list
+    @list = List.find(params[:list_id])
+  end
 
   # Secure list creation against malicious params
   def list_params

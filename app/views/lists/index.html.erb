@@ -1,9 +1,23 @@
-<h1>Movie lists</h1>
+<div class="container mt-3">
+  <h3>Movie lists</h3>
 
-<ul class="list-group">
-  <% @lists.each do |list| %>
-    <li class="list-group-item"><%= link_to list.name, list_path(list) %></li>
-  <% end %>
-</ul>
+  <div class="d-flex justify-content-between  w-75">
 
-<p class="mt-2"><%= link_to "New list", new_list_path %></p>
+    <ul class="list-group col-9 border border-secondary-subtle mt-2">
+      <% @lists.each do |list| %>
+        <li class="list-group-item d-flex justify-content-between border-0">
+          <%= link_to list.name, list_path(list), class: "btn btn-ligth" %>
+          <%= button_to "<i class='fa-solid fa-eraser'></i>".html_safe,
+          list_path(list), method: :delete,
+        class: "btn btn-ligth" %>
+        </li>
+      <% end %>
+    </ul>
+
+    <p class="mt-2">
+      <%= link_to '<i class="fa-solid fa-circle-plus"></i> New list'.html_safe,
+      new_list_path, class:"btn btn-ligth" %>
+    </p>
+  </div>
+
+</div>

@@ -5,13 +5,22 @@ class BookmarksController < ApplicationController
     @bookmark = @list.bookmarks.build
   end
   def create
-    @bookmark = @list.bookmarks.build[bookmark_params]
-    redirect_to @list
+    @bookmark = @list.bookmarks.build(bookmark_params)
+    if @bookmark.save
+      redirect_to @list
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def destroy
     @bookmark = Bookmark.find(params[:id])
-    @bookmark.destroy
+    @list = @bookmark.list_id
+    if @bookmark.destroy
+      redirect_to @list, status: :see_other
+    else
+      raise
+    end
   end
 
   private
@@ -21,6 +30,6 @@ class BookmarksController < ApplicationController
   end
 
   def bookmark_params
-    params.require(:bookmark).permit(:comment)
+    params.require(:bookmark).permit(:comment, :movie_id)
   end
 end
